@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jurnalku/PermintaanSanksi.dart';
 import 'loginpage.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LoginPage(),
+      home: const PermintaanSaksiPage(),
     );
   }
 }
