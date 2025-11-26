@@ -19,14 +19,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Aplikasi Jurnalku',
       debugShowCheckedModeBanner: false,
-      debugShowCheckedModeBanner: false,
-      title: 'Jurnalku',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
 
       home: const PengaturanAkunPage(),
-      home: const JurnalPembiasaanPage(),
     );
   }
 }
