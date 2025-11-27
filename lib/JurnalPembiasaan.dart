@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class JurnalPembiasaanPage extends StatefulWidget {
   const JurnalPembiasaanPage({super.key});
@@ -8,13 +9,78 @@ class JurnalPembiasaanPage extends StatefulWidget {
 }
 
 class _JurnalPembiasaanPageState extends State<JurnalPembiasaanPage> {
-  // Status untuk setiap tanggal (null = belum diisi, true = sudah diisi, false = tidak diisi)
-  Map<int, bool?> dateStatus = {
-    3: false, 4: false, 5: false, 6: false, 7: false,
-    10: false, 11: false, 12: false, 13: false, 14: false,
-    17: false, 18: false, 19: false, 20: false, 21: false,
-    25: null, 26: null, 27: null, 28: null,
-  };
+  late DateTime currentMonth;
+  Map<int, bool?> dateStatus = {};
+
+  @override
+  void initState() {
+    super.initState();
+    currentMonth = DateTime.now();
+    _generateDateStatus();
+  }
+
+  void _generateDateStatus() {
+    dateStatus.clear();
+    final daysInMonth = DateTime(currentMonth.year, currentMonth.month + 1, 0).day;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    
+    for (int i = 1; i <= daysInMonth; i++) {
+      final date = DateTime(currentMonth.year, currentMonth.month, i);
+      
+      // Jika tanggal sudah lewat (sebelum hari ini), set status false (tidak diisi)
+      if (date.isBefore(today)) {
+        dateStatus[i] = false;
+      } 
+      // Jika tanggal adalah hari ini, set null (belum diisi, bisa diisi)
+      else if (date.isAtSameMomentAs(today)) {
+        dateStatus[i] = null;
+      }
+      // Jika tanggal masa depan (setelah hari ini), set status ke special marker
+      else {
+        dateStatus[i] = null; // null untuk masa depan, tapi akan ditandai berbeda
+      }
+    }
+  }
+
+  String _getMonthYearString() {
+    final months = [
+      '', 'JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI',
+      'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'
+    ];
+    return '${months[currentMonth.month]} - ${currentMonth.year}';
+  }
+
+  List<List<int>> _generateCalendarWeeks() {
+    final daysInMonth = DateTime(currentMonth.year, currentMonth.month + 1, 0).day;
+    final firstDayOfMonth = DateTime(currentMonth.year, currentMonth.month, 1);
+    final startWeekday = firstDayOfMonth.weekday; // 1 = Monday, 7 = Sunday
+    
+    List<List<int>> weeks = [];
+    List<int> currentWeek = [];
+    
+    // Add empty spaces for days before the first day of month
+    for (int i = 1; i < startWeekday; i++) {
+      currentWeek.add(0); // 0 represents empty cell
+    }
+    
+    // Add all days of the month
+    for (int day = 1; day <= daysInMonth; day++) {
+      currentWeek.add(day);
+      
+      // If it's Sunday (7) or last day of month, start a new week
+      if (currentWeek.length == 7 || day == daysInMonth) {
+        // Fill remaining days with empty cells if needed
+        while (currentWeek.length < 7) {
+          currentWeek.add(0);
+        }
+        weeks.add(List.from(currentWeek));
+        currentWeek.clear();
+      }
+    }
+    
+    return weeks;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +105,7 @@ class _JurnalPembiasaanPageState extends State<JurnalPembiasaanPage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     const Text(
-                      'Tester',
+                      'Daniel',
                       style: TextStyle(
                         color: Colors.black87,
                         fontSize: 16,
@@ -83,7 +149,7 @@ class _JurnalPembiasaanPageState extends State<JurnalPembiasaanPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                'NOVEMBER - 2025',
+                _getMonthYearString(),
                 style: TextStyle(
                   fontSize: 15,
                   color: Colors.grey.shade600,
@@ -92,19 +158,47 @@ class _JurnalPembiasaanPageState extends State<JurnalPembiasaanPage> {
               ),
               const SizedBox(height: 20),
 
-              // Button Bulan Sebelumnya
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.arrow_back, size: 18),
-                label: const Text('Bulan\nSebelumnya'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0D47A1),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              // Buttons Bulan Sebelumnya & Selanjutnya
+              Row(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        currentMonth = DateTime(currentMonth.year, currentMonth.month - 1);
+                        _generateDateStatus();
+                      });
+                    },
+                    icon: const Icon(Icons.arrow_back, size: 18),
+                    label: const Text('Bulan\nSebelumnya'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0D47A1),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 12),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        currentMonth = DateTime(currentMonth.year, currentMonth.month + 1);
+                        _generateDateStatus();
+                      });
+                    },
+                    icon: const Icon(Icons.arrow_forward, size: 18),
+                    label: const Text('Bulan\nSelanjutnya'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0D47A1),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 30),
@@ -248,37 +342,66 @@ class _JurnalPembiasaanPageState extends State<JurnalPembiasaanPage> {
   }
 
   Widget _buildCalendarGrid() {
-    final dates = [
-      [3, 4, 5, 6, 7],
-      [10, 11, 12, 13, 14],
-      [17, 18, 19, 20, 21],
-      [24, 25, 26, 27, 28],
-    ];
+    final weeks = _generateCalendarWeeks();
 
     return Column(
-      children: dates.map((row) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+      children: [
+        // Day headers
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
           child: Row(
-            children: row.map((date) {
+            children: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'].map((day) {
               return Expanded(
-                child: _buildDateCell(date),
+                child: Text(
+                  day,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey.shade700,
+                  ),
+                ),
               );
             }).toList(),
           ),
-        );
-      }).toList(),
+        ),
+        // Calendar weeks
+        ...weeks.map((week) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Row(
+              children: week.map((date) {
+                return Expanded(
+                  child: date == 0 ? const SizedBox() : _buildDateCell(date),
+                );
+              }).toList(),
+            ),
+          );
+        }).toList(),
+      ],
     );
   }
 
   Widget _buildDateCell(int date) {
     final status = dateStatus[date];
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final thisDate = DateTime(currentMonth.year, currentMonth.month, date);
+    final isFuture = thisDate.isAfter(today);
+    
     Color bgColor;
     Widget? icon;
 
     if (status == null) {
-      bgColor = Colors.grey.shade300;
-      icon = null;
+      if (isFuture) {
+        // Tanggal masa depan - abu-abu lebih terang, tidak bisa diklik
+        bgColor = Colors.grey.shade200;
+        icon = null;
+      } else {
+        // Tanggal hari ini atau sebelumnya yang belum diisi
+        bgColor = Colors.grey.shade300;
+        icon = null;
+      }
     } else if (status) {
       bgColor = Colors.green.shade50;
       icon = const Icon(Icons.check_circle, color: Colors.green, size: 20);
@@ -287,29 +410,44 @@ class _JurnalPembiasaanPageState extends State<JurnalPembiasaanPage> {
       icon = const Icon(Icons.cancel, color: Colors.red, size: 20);
     }
 
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
-      child: Column(
-        children: [
-          Text(
-            date.toString().padLeft(2, '0'),
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade700,
-            ),
+    // Hanya bisa diklik jika:
+    // 1. status == null (belum diisi)
+    // 2. tanggal bukan masa depan
+    final canClick = status == null && !isFuture;
+
+    return InkWell(
+      onTap: canClick ? () {
+        setState(() {
+          dateStatus[date] = true; // Ubah menjadi sudah diisi
+        });
+      } : null,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isFuture ? Colors.grey.shade200 : Colors.grey.shade300,
           ),
-          if (icon != null) ...[
-            const SizedBox(height: 4),
-            icon,
+        ),
+        child: Column(
+          children: [
+            Text(
+              date.toString().padLeft(2, '0'),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: isFuture ? Colors.grey.shade400 : Colors.grey.shade700,
+              ),
+            ),
+            if (icon != null) ...[
+              const SizedBox(height: 4),
+              icon,
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
