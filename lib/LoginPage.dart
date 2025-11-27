@@ -9,10 +9,12 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
         child: Column(
           children: [
-            // IMAGE
+            // HEADER IMAGE
             Image.asset(
               'assets/images/Banner-Web.jpg',
               width: double.infinity,
@@ -157,7 +159,7 @@ class LoginPage extends StatelessWidget {
 
             const SizedBox(height: 60),
 
-            // CARD TITLE
+            // SECTION TITLE
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Text(
@@ -186,7 +188,7 @@ class LoginPage extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // FITUR CARD
+            // CARD FITUR
             ..._featureCards(),
 
             const SizedBox(height: 60),
@@ -204,12 +206,12 @@ class LoginPage extends StatelessWidget {
                     children: [
                       _socialIcon(
                         FontAwesomeIcons.whatsapp,
-                        'https://jurnalku.smkwikrama.sch.id/login',
+                        'https://wa.me/6282260168080', // Ganti dengan nomor WhatsApp
                       ),
                       const SizedBox(width: 20),
                       _socialIcon(
                         FontAwesomeIcons.instagram,
-                        'https://www.instagram.com/smkwikrama/',
+                        'https://www.instagram.com/smkwikramabogor',
                       ),
                       const SizedBox(width: 20),
                       _socialIcon(
@@ -219,7 +221,7 @@ class LoginPage extends StatelessWidget {
                       const SizedBox(width: 20),
                       _socialIcon(
                         FontAwesomeIcons.youtube,
-                        'https://www.youtube.com/@multimediawikrama7482',
+                        'https://www.youtube.com/@smkwikramabogor',
                       ),
                     ],
                   ),
@@ -235,10 +237,32 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       ),
+      
+      // Floating Button - Jelajahi siswa
+      Positioned(
+        right: 20,
+        bottom: 20,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            // Aksi untuk jelajahi siswa
+          },
+          backgroundColor: const Color(0xFF0D47A1),
+          icon: const Icon(Icons.explore, color: Colors.white),
+          label: const Text(
+            'Jelajahi siswa',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    ],
+      ),
     );
   }
 
-  // CLICKABLE USER
+  // Social Media Icon Widget with URL
   Widget _socialIcon(IconData icon, String url) {
     return InkWell(
       onTap: () => _launchURL(url),
@@ -254,7 +278,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  // LAUNCH URL
+  // Method to launch URL
   Future<void> _launchURL(String urlString) async {
     final Uri url = Uri.parse(urlString);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
