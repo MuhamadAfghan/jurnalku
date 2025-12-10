@@ -3,7 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jurnalku/dashboard.dart';
 import 'package:jurnalku/explorer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:jurnalku/explorer.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});

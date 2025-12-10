@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Optional: Add this package for specific brand icons if needed, otherwise using standard Icons
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jurnalku/dashboard.dart'; // Pastikan import ini ada
 
 void main() {
   runApp(const MyApp());
@@ -109,7 +110,19 @@ class _StudentProfilePageState extends State<StudentProfilePage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  const Icon(Icons.home_outlined, color: Colors.white),
+                  // PERUBAHAN DI SINI: Mengubah Icon menjadi IconButton
+                  IconButton(
+                    icon: const Icon(Icons.home_outlined, color: Colors.white),
+                    onPressed: () {
+                      // Navigasi ke DashboardPage
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DashboardPage(),
+                        ),
+                      );
+                    },
+                  ),
                   const Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,

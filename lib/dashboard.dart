@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jurnalku/catatan_sikap_page.dart';
 import 'package:jurnalku/progress.dart';
+import 'package:jurnalku/profile_page.dart';
 import 'JurnalPembiasaan.dart';
 import 'PermintaanSaksi.dart';
 
@@ -219,31 +220,39 @@ class DashboardPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(color: Colors.grey.shade100),
                             ),
-                            child: const Column(
+                            child: Column(
                               children: [
                                 MenuTile(
                                   icon: Icons.person_outline,
                                   title: "Profil",
                                   subtitle:
                                       "Lihat dan kelola profilmu di sini.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const StudentProfilePage(),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 1,
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
-                                MenuTile(
+                                const MenuTile(
                                   icon: Icons.work_outline,
                                   title: "Portofolio",
                                   subtitle:
                                       "Lihat dan kelola portofolio kompetensimu di sini.",
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 1,
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
-                                MenuTile(
+                                const MenuTile(
                                   icon: Icons.verified_outlined,
                                   title: "Sertifikat",
                                   subtitle:
