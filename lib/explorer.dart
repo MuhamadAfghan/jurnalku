@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'LoginPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,10 +14,9 @@ class MyApp extends StatelessWidget {
       title: 'Jurnalku Wikrama',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // Mengatur font default (gunakan GoogleFonts di pubspec jika ingin lebih akurat)
         fontFamily: 'Segoe UI',
         primaryColor: const Color(0xFF004ea2),
-        scaffoldBackgroundColor: const Color(0xFFF5F7FA), // Background abu muda
+        scaffoldBackgroundColor: const Color(0xFFF5F7FA),
         useMaterial3: true,
       ),
       home: const StudentDirectoryPage(),
@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Model Data
 class Student {
   final String name;
   final String id;
@@ -50,7 +49,6 @@ class StudentDirectoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Data Dummy sesuai screenshot
     final List<Student> students = [
       Student(
         name: "Achmad Whildan",
@@ -73,7 +71,6 @@ class StudentDirectoryPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      // Navbar Putih
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -104,7 +101,12 @@ class StudentDirectoryPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF004ea2),
                 foregroundColor: Colors.white,
@@ -118,7 +120,7 @@ class StudentDirectoryPage extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                "Dashboard",
+                "Login",
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
@@ -129,10 +131,7 @@ class StudentDirectoryPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Hero Section (Background Biru Gelap)
             const HeroSection(),
-
-            // 2. Info Result Count
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 30, 24, 10),
               child: Text(
@@ -144,19 +143,12 @@ class StudentDirectoryPage extends StatelessWidget {
                 ),
               ),
             ),
-
-            // 3. Grid List Siswa
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  // Responsif: 2 Kolom di desktop/tablet, 1 Kolom di HP
                   int crossAxisCount = constraints.maxWidth > 700 ? 2 : 1;
-                  // Aspek rasio disesuaikan agar kartu tidak terlalu tinggi/pendek
-                  double childAspectRatio = constraints.maxWidth > 700
-                      ? 0.85
-                      : 0.95;
-                  // Jika di HP (1 kolom), buat kartu agak lebih pendek
+                  double childAspectRatio = constraints.maxWidth > 700 ? 0.85 : 0.95;
                   if (constraints.maxWidth < 500) childAspectRatio = 1.05;
 
                   return GridView.builder(
@@ -176,11 +168,7 @@ class StudentDirectoryPage extends StatelessWidget {
                 },
               ),
             ),
-
-            // 4. Pagination
             const PaginationSection(),
-
-            // 5. Footer
             const FooterSection(),
           ],
         ),
@@ -189,7 +177,6 @@ class StudentDirectoryPage extends StatelessWidget {
   }
 }
 
-// --- WIDGET HERO SECTION ---
 class HeroSection extends StatelessWidget {
   const HeroSection({super.key});
 
@@ -197,23 +184,20 @@ class HeroSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      // Menggunakan Stack untuk background image + overlay gradient
       decoration: const BoxDecoration(
-        color: Color(0xFF0D2854), // Warna dasar biru gelap
+        color: Color(0xFF0D2854),
       ),
       child: Stack(
         children: [
-          // Background Pattern/Image (Optional, simulasi blur)
           Positioned.fill(
             child: Opacity(
               opacity: 0.2,
               child: Image.network(
-                "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070", // Gambar sekolah dummy
+                "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2070",
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          // Gradient Overlay agar teks terbaca jelas
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -228,8 +212,6 @@ class HeroSection extends StatelessWidget {
               ),
             ),
           ),
-
-          // Konten Hero
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
             child: Column(
@@ -257,8 +239,6 @@ class HeroSection extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 30),
-
-                // Search Bar & Button Container
                 Container(
                   constraints: const BoxConstraints(maxWidth: 700),
                   child: Column(
@@ -274,8 +254,7 @@ class HeroSection extends StatelessWidget {
                               ),
                               child: TextField(
                                 decoration: InputDecoration(
-                                  hintText:
-                                      "Cari nama siswa, NIS, atau rombel...",
+                                  hintText: "Cari nama siswa, NIS, atau rombel...",
                                   hintStyle: TextStyle(
                                     color: Colors.grey[500],
                                     fontSize: 14,
@@ -298,9 +277,7 @@ class HeroSection extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(
-                                  0xFF004ea2,
-                                ), // Biru tombol cari
+                                backgroundColor: const Color(0xFF004ea2),
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6),
@@ -321,8 +298,6 @@ class HeroSection extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 12),
-
-                      // Filter Button
                       Container(
                         width: double.infinity,
                         height: 45,
@@ -356,7 +331,7 @@ class HeroSection extends StatelessWidget {
                             backgroundColor: Colors.white,
                             side: const BorderSide(
                               color: Colors.white,
-                            ), // Border invisible
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
@@ -375,7 +350,6 @@ class HeroSection extends StatelessWidget {
   }
 }
 
-// --- WIDGET KARTU SISWA (MIRIP PERSIS) ---
 class StudentCard extends StatelessWidget {
   final Student student;
   const StudentCard({super.key, required this.student});
@@ -384,7 +358,6 @@ class StudentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
-      // margin: EdgeInsets.all(5),
       color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -395,17 +368,12 @@ class StudentCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- BAGIAN ATAS ---
             CircleAvatar(
               radius: 32,
-              backgroundColor: Colors.grey[100], // Warna background avatar
-              // Menggunakan placeholder icon jika gambar gagal load atau dummy
+              backgroundColor: Colors.grey[100],
               child: const Icon(Icons.person, size: 40, color: Colors.grey),
-              // Jika pakai gambar asli, uncomment baris bawah:
-              // backgroundImage: NetworkImage(student.imageUrl),
             ),
             const SizedBox(height: 16),
-
             Text(
               student.name,
               style: const TextStyle(
@@ -417,19 +385,13 @@ class StudentCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 6),
-
             Text(
               "${student.id} | ${student.major} | ${student.className}",
               style: TextStyle(color: Colors.grey[600], fontSize: 13),
             ),
-
             const SizedBox(height: 40),
-
-            // Divider
             Divider(height: 1, color: Colors.grey[200]),
             const SizedBox(height: 16),
-
-            // --- BAGIAN STATISTIK ---
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -459,13 +421,10 @@ class StudentCard extends StatelessWidget {
                 ),
               ],
             ),
-
             const SizedBox(height: 16),
-
-            // --- TOMBOL ---
             SizedBox(
               width: double.infinity,
-              height: 40, // Tinggi tombol sedikit diperkecil agar proporsional
+              height: 40,
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
@@ -498,7 +457,6 @@ class StudentCard extends StatelessWidget {
     );
   }
 }
-// --- PAGINATION & FOOTER ---
 
 class PaginationSection extends StatelessWidget {
   const PaginationSection({super.key});
@@ -546,10 +504,10 @@ class FooterSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _socialIcon(Icons.chat_bubble_outline), // WA
-              _socialIcon(Icons.camera_alt_outlined), // IG
-              _socialIcon(Icons.business), // LinkedIn
-              _socialIcon(Icons.play_circle_outline), // YT
+              _socialIcon(Icons.chat_bubble_outline),
+              _socialIcon(Icons.camera_alt_outlined),
+              _socialIcon(Icons.business),
+              _socialIcon(Icons.play_circle_outline),
             ],
           ),
           const SizedBox(height: 20),
