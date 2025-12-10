@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'LoginPage.dart';
+import 'package:jurnalku/dashboard.dart';
+// import 'LoginPage.dart';
+import 'package:jurnalku/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -104,7 +106,7 @@ class StudentDirectoryPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  MaterialPageRoute(builder: (context) => const DashboardPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -120,7 +122,7 @@ class StudentDirectoryPage extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                "Login",
+                "Dashboard",
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
