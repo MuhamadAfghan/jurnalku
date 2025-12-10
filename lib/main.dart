@@ -5,6 +5,8 @@ import 'catatan_sikap_page.dart';
 import 'pengaturan_akun_page.dart';
 import 'package:jurnalku/JurnalPembiasaan.dart';
 import 'package:jurnalku/PermintaanSaksi.dart';
+import 'package:jurnalku/dashboard.dart';
+import 'package:jurnalku/explorer.dart';
 import 'loginpage.dart';
 
 void main() {

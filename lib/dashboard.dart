@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jurnalku/catatan_sikap_page.dart';
+import 'package:jurnalku/progress.dart';
+import 'JurnalPembiasaan.dart';
+import 'PermintaanSaksi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +17,9 @@ class MyApp extends StatelessWidget {
       title: 'Jurnalku Dashboard',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Segoe UI', // Menggunakan font sistem standar yang bersih
+        fontFamily: 'Segoe UI',
         primaryColor: const Color(0xFF104E92),
-        scaffoldBackgroundColor: const Color(
-          0xFFF7F9FC,
-        ), // Background abu sangat muda
+        scaffoldBackgroundColor: const Color(0xFFF7F9FC),
         useMaterial3: true,
       ),
       home: const DashboardPage(),
@@ -35,7 +37,6 @@ class DashboardPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // --- 1. HEADER (FIXED) ---
             Container(
               color: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -70,25 +71,22 @@ class DashboardPage extends StatelessWidget {
                     radius: 20,
                     backgroundImage: NetworkImage(
                       'https://i.pravatar.cc/150?img=12',
-                    ), // Dummy Image
+                    ),
                     backgroundColor: Colors.grey,
                   ),
                 ],
               ),
             ),
-
-            // --- 2. SCROLLABLE BODY ---
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // A. HERO SECTION
                     Stack(
                       children: [
                         Container(
                           width: double.infinity,
-                          height: 180, // Tinggi disesuaikan
+                          height: 180,
                           decoration: const BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.centerLeft,
@@ -97,7 +95,6 @@ class DashboardPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Dekorasi Lengkungan (Abstract Shapes)
                         Positioned(
                           top: -50,
                           left: -50,
@@ -122,7 +119,6 @@ class DashboardPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Text Content
                         const Positioned.fill(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -153,18 +149,16 @@ class DashboardPage extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // B. APA ITU JURNALKU CARD
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(24),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF104E92), // Solid Dark Blue
+                              color: const Color(0xFF104E92),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: const Column(
@@ -190,35 +184,26 @@ class DashboardPage extends StatelessWidget {
                               ],
                             ),
                           ),
-
                           const SizedBox(height: 24),
-
-                          // C. INFO CARDS (Vertical)
                           const InfoCard(
-                            icon:
-                                Icons.apartment_outlined, // Icon gedung sekolah
+                            icon: Icons.apartment_outlined,
                             title: "Dirancang Khusus",
                             description:
                                 "Memenuhi kebutuhan spesifik sekolah kami dengan fokus pada kemajuan siswa.",
                           ),
                           const InfoCard(
-                            icon: Icons
-                                .school_outlined, // Icon topi wisuda (mirip)
+                            icon: Icons.school_outlined,
                             title: "Efektif",
                             description:
                                 "Memudahkan siswa dan guru melihat perkembangan secara real-time.",
                           ),
                           const InfoCard(
-                            icon: Icons
-                                .layers_outlined, // Icon layer (terintegrasi)
+                            icon: Icons.layers_outlined,
                             title: "Terintegrasi",
                             description:
                                 "Pengajuan kompetensi siswa, validasi dan laporan perkembangan yang transparan.",
                           ),
-
                           const SizedBox(height: 32),
-
-                          // D. MENU APLIKASI
                           Text(
                             "MENU APLIKASI",
                             style: TextStyle(
@@ -228,8 +213,6 @@ class DashboardPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 16),
-
-                          // Group 1
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -269,67 +252,94 @@ class DashboardPage extends StatelessWidget {
                               ],
                             ),
                           ),
-
                           const SizedBox(height: 20),
-
-                          // Group 2
                           Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(color: Colors.grey.shade100),
                             ),
-                            child: const Column(
+                            child: Column(
                               children: [
                                 MenuTile(
                                   icon: Icons.book_outlined,
                                   title: "Jurnal Pembiasaan",
                                   subtitle:
                                       "Catat dan pantau kegiatan pembiasaan harianmu.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const JurnalPembiasaanPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 1,
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
                                 MenuTile(
-                                  icon:
-                                      Icons.people_outline, // Permintaan Saksi
+                                  icon: Icons.people_outline,
                                   title: "Permintaan Saksi",
                                   subtitle:
                                       "Lihat teman yang mengajukan permintaan saksi.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PermintaanSaksiPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 1,
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
                                 MenuTile(
-                                  icon:
-                                      Icons.bar_chart_rounded, // Progress icon
+                                  icon: Icons.bar_chart_rounded,
                                   title: "Progress",
                                   subtitle:
                                       "Lihat kemajuan kompetensi dan pencapaian belajarmu.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ProgressBelajarPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                Divider(
+                                const Divider(
                                   height: 1,
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
                                 MenuTile(
-                                  icon: Icons
-                                      .warning_amber_rounded, // Catatan Sikap
+                                  icon: Icons.warning_amber_rounded,
                                   title: "Catatan Sikap",
                                   subtitle:
                                       "Lihat catatan sikap dan perilaku dari guru.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CatatanSikapPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
                           ),
-
                           const SizedBox(height: 32),
-
-                          // E. STATISTIK KOMPETENSI
                           Text(
                             "STATISTIK KOMPETENSI",
                             style: TextStyle(
@@ -339,12 +349,11 @@ class DashboardPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 16),
-
                           const StatCard(
                             label: "Materi Diselesaikan",
                             count: "4",
                             status: "Selesai",
-                            statusColor: Color(0xFF4CAF50), // Green
+                            statusColor: Color(0xFF4CAF50),
                             icon: Icons.check_circle_outline,
                             bgColorIcon: Color(0xFFE8F5E9),
                           ),
@@ -352,7 +361,7 @@ class DashboardPage extends StatelessWidget {
                             label: "Pengajuan Pending",
                             count: "0",
                             status: "Pending",
-                            statusColor: Color(0xFFFF9800), // Orange
+                            statusColor: Color(0xFFFF9800),
                             icon: Icons.access_time,
                             bgColorIcon: Color(0xFFFFF3E0),
                           ),
@@ -360,7 +369,7 @@ class DashboardPage extends StatelessWidget {
                             label: "Materi Hari Ini",
                             count: "0",
                             status: "Hari Ini",
-                            statusColor: Color(0xFF2196F3), // Blue
+                            statusColor: Color(0xFF2196F3),
                             icon: Icons.calendar_today_outlined,
                             bgColorIcon: Color(0xFFE3F2FD),
                           ),
@@ -368,14 +377,11 @@ class DashboardPage extends StatelessWidget {
                             label: "Materi Revisi",
                             count: "0",
                             status: "Revisi",
-                            statusColor: Color(0xFF9C27B0), // Purple
+                            statusColor: Color(0xFF9C27B0),
                             icon: Icons.refresh,
                             bgColorIcon: Color(0xFFF3E5F5),
                           ),
-
                           const SizedBox(height: 32),
-
-                          // F. PROGRESS AKADEMIK
                           const Text(
                             "Progress Akademik",
                             style: TextStyle(
@@ -394,37 +400,33 @@ class DashboardPage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Legend List
                                 _buildLegend(
                                   "Selesai",
                                   "4",
                                   const Color(0xFF3F51B5),
-                                ), // Blue/Indigo
+                                ),
                                 _buildLegend(
                                   "Pending",
                                   "0",
                                   const Color(0xFF7986CB),
-                                ), // Lighter Indigo
+                                ),
                                 _buildLegend(
                                   "Belum",
                                   "0",
                                   const Color(0xFFADD8E6),
-                                ), // Light Blue
+                                ),
                                 _buildLegend(
                                   "Hari Ini",
                                   "0",
                                   const Color(0xFF00BCD4),
-                                ), // Cyan
-
+                                ),
                                 const SizedBox(height: 24),
-
-                                // Link Lihat Progress
                                 const Row(
                                   children: [
                                     Text(
                                       "Lihat Progress Kamu",
                                       style: TextStyle(
-                                        color: Color(0xFF1565C0), // Link Blue
+                                        color: Color(0xFF1565C0),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14,
                                       ),
@@ -437,21 +439,15 @@ class DashboardPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-
                                 const SizedBox(height: 24),
                                 Divider(height: 1, color: Colors.grey[200]),
                                 const SizedBox(height: 20),
-
-                                // Task List Items (Installasi Postman)
                                 _buildTaskItem("Installasi Postman"),
                                 const SizedBox(height: 12),
                                 _buildTaskItem(
                                   "Implementasi Penggunaan Postman",
                                 ),
-
                                 const SizedBox(height: 24),
-
-                                // Link Bottom
                                 const Center(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -476,7 +472,6 @@ class DashboardPage extends StatelessWidget {
                               ],
                             ),
                           ),
-
                           const SizedBox(height: 40),
                         ],
                       ),
@@ -485,11 +480,9 @@ class DashboardPage extends StatelessWidget {
                 ),
               ),
             ),
-
-            // --- 3. FOOTER (FIXED BOTTOM STRIP) ---
             Container(
               width: double.infinity,
-              color: const Color(0xFFE3F2FD), // Light blue footer bg
+              color: const Color(0xFFE3F2FD),
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: const Text(
                 "© GEN-28 PPLG SMK Wikrama Bogor. All Rights Reserved.",
@@ -507,7 +500,6 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  // --- Helper Widgets for Progress Section ---
   Widget _buildLegend(String label, String count, Color color) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
@@ -550,7 +542,7 @@ class DashboardPage extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           decoration: BoxDecoration(
-            color: const Color(0xFFE8F5E9), // Light Green
+            color: const Color(0xFFE8F5E9),
             borderRadius: BorderRadius.circular(4),
           ),
           child: const Text(
@@ -566,8 +558,6 @@ class DashboardPage extends StatelessWidget {
     );
   }
 }
-
-// --- WIDGET PENDUKUNG ---
 
 class InfoCard extends StatelessWidget {
   final IconData icon;
@@ -590,7 +580,6 @@ class InfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        // Shadow halus
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -632,56 +621,58 @@ class MenuTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
+  final VoidCallback? onTap;
 
   const MenuTile({
     super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          // Icon Container
-          Container(
-            width: 45,
-            height: 45,
-            decoration: const BoxDecoration(
-              color: Color(0xFFE3F2FD), // Light Blue
-              shape: BoxShape.circle,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Container(
+              width: 45,
+              height: 45,
+              decoration: const BoxDecoration(
+                color: Color(0xFFE3F2FD),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(icon, color: const Color(0xFF1976D2), size: 22),
             ),
-            child: Icon(icon, color: const Color(0xFF1976D2), size: 22),
-          ),
-          const SizedBox(width: 16),
-          // Texts
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
-          ),
-          // Arrow
-          const Icon(Icons.chevron_right, color: Colors.blue, size: 18),
-        ],
+            const Icon(Icons.chevron_right, color: Colors.blue, size: 18),
+          ],
+        ),
       ),
     );
   }

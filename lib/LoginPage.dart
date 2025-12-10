@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:jurnalku/dashboard.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -12,257 +13,240 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: [
           SingleChildScrollView(
-        child: Column(
-          children: [
-            // HEADER IMAGE
-            Image.asset(
-              'assets/images/Banner-Web.jpg',
-              width: double.infinity,
-              height: 200,
-              fit: BoxFit.cover,
-            ),
-
-            const SizedBox(height: 32),
-
-            // FORM LOGIN
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                    text: const TextSpan(
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                      children: [
-                        TextSpan(text: "Masuk untuk memulai "),
-                        TextSpan(
-                          text: "Jurnalku",
-                          style: TextStyle(color: Color(0xFF0D47A1)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-
-                  const Text(
-                    "Username atau NIS",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Masukkan username atau NIS",
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF0D47A1)),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  const Text(
-                    "Password",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Masukkan password",
-                      hintStyle: TextStyle(color: Colors.grey.shade400),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
-                      suffixIcon: const Icon(Icons.visibility_off, color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.grey.shade300),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF0D47A1)),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0D47A1),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        elevation: 0,
-                      ),
-                      onPressed: () {},
-                      child: const Text(
-                        "Masuk",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  const Center(
-                    child: Text(
-                      "Lupa password? Hubungi guru laboran.",
-                      style: TextStyle(fontSize: 14, color: Colors.black54),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 60),
-
-            // SECTION TITLE
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Text(
-                "Menyatukan Upaya untuk Kemajuan Siswa",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/images/Banner-Web.jpg',
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.cover,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                "Jurnalku adalah aplikasi cerdas yang membantu guru dan siswa dalam memantau dan mengelola kompetensi keahlian siswa secara efektif.",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black54,
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            // CARD FITUR
-            ..._featureCards(),
-
-            const SizedBox(height: 60),
-
-            // FOOTER
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
-              color: const Color(0xFF0D47A1),
-              child: Column(
-                children: [
-                  // Social Media Icons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(height: 32),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _socialIcon(
-                        FontAwesomeIcons.whatsapp,
-                        'https://wa.me/6282260168080', // Ganti dengan nomor WhatsApp
+                      RichText(
+                        text: const TextSpan(
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                          children: [
+                            TextSpan(text: "Masuk untuk memulai "),
+                            TextSpan(
+                              text: "Jurnalku",
+                              style: TextStyle(color: Color(0xFF0D47A1)),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(width: 20),
-                      _socialIcon(
-                        FontAwesomeIcons.instagram,
-                        'https://www.instagram.com/smkwikramabogor',
+                      const SizedBox(height: 32),
+                      const Text(
+                        "Username atau NIS",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                        ),
                       ),
-                      const SizedBox(width: 20),
-                      _socialIcon(
-                        FontAwesomeIcons.linkedin,
-                        'https://www.linkedin.com/school/smkwikramabogor',
+                      const SizedBox(height: 8),
+                      TextField(
+                        decoration: InputDecoration(
+                          hintText: "Masukkan username atau NIS",
+                          hintStyle: TextStyle(color: Colors.grey.shade400),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: Color(0xFF0D47A1)),
+                          ),
+                        ),
                       ),
-                      const SizedBox(width: 20),
-                      _socialIcon(
-                        FontAwesomeIcons.youtube,
-                        'https://www.youtube.com/@smkwikramabogor',
+                      const SizedBox(height: 20),
+                      const Text(
+                        "Password",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: "Masukkan password",
+                          hintStyle: TextStyle(color: Colors.grey.shade400),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          suffixIcon: const Icon(Icons.visibility_off, color: Colors.grey),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(color: Colors.grey.shade300),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(color: Color(0xFF0D47A1)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0D47A1),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            elevation: 0,
+                          ),
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DashboardPage(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Masuk",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      const Center(
+                        child: Text(
+                          "Lupa password? Hubungi guru laboran.",
+                          style: TextStyle(fontSize: 14, color: Colors.black54),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
-                  const Text(
-                    "© GEN-28 PPLG SMK Wikrama Bogor. All Rights Reserved.",
-                    style: TextStyle(color: Colors.white70, fontSize: 13),
+                ),
+                const SizedBox(height: 60),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    "Menyatukan Upaya untuk Kemajuan Siswa",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
                     textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-      
-      // Floating Button - Jelajahi siswa
-      Positioned(
-        right: 20,
-        bottom: 20,
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            // Aksi untuk jelajahi siswa
-          },
-          backgroundColor: const Color(0xFF0D47A1),
-          icon: const Icon(Icons.explore, color: Colors.white),
-          label: const Text(
-            'Jelajahi siswa',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w600,
+                ),
+                const SizedBox(height: 16),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 32),
+                  child: Text(
+                    "Jurnalku adalah aplikasi cerdas yang membantu guru dan siswa dalam memantau dan mengelola kompetensi keahlian siswa secara efektif.",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black54,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 40),
+                ..._featureCards(),
+                const SizedBox(height: 60),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+                  color: const Color(0xFF0D47A1),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _socialIcon(
+                            FontAwesomeIcons.whatsapp,
+                            'https://wa.me/6282260168080',
+                          ),
+                          const SizedBox(width: 20),
+                          _socialIcon(
+                            FontAwesomeIcons.instagram,
+                            'https://www.instagram.com/smkwikramabogor',
+                          ),
+                          const SizedBox(width: 20),
+                          _socialIcon(
+                            FontAwesomeIcons.linkedin,
+                            'https://www.linkedin.com/school/smkwikramabogor',
+                          ),
+                          const SizedBox(width: 20),
+                          _socialIcon(
+                            FontAwesomeIcons.youtube,
+                            'https://www.youtube.com/@smkwikramabogor',
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      const Text(
+                        "© GEN-28 PPLG SMK Wikrama Bogor. All Rights Reserved.",
+                        style: TextStyle(color: Colors.white70, fontSize: 13),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-      ),
-    ],
+          Positioned(
+            right: 20,
+            bottom: 20,
+            child: FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              backgroundColor: const Color(0xFF0D47A1),
+              icon: const Icon(Icons.explore, color: Colors.white),
+              label: const Text(
+                'Jelajahi siswa',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  // Social Media Icon Widget with URL
   Widget _socialIcon(IconData icon, String url) {
     return InkWell(
       onTap: () => _launchURL(url),
@@ -278,7 +262,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  // Method to launch URL
   Future<void> _launchURL(String urlString) async {
     final Uri url = Uri.parse(urlString);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
@@ -286,7 +269,6 @@ class LoginPage extends StatelessWidget {
     }
   }
 
-  // LIST FITUR
   List<Widget> _featureCards() {
     return [
       _feature(
