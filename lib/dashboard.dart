@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jurnalku/catatan_sikap_page.dart';
+import 'package:jurnalku/progress.dart';
 import 'JurnalPembiasaan.dart';
+import 'PermintaanSaksi.dart';
 
 void main() {
   runApp(const MyApp());
@@ -221,7 +224,8 @@ class DashboardPage extends StatelessWidget {
                                 MenuTile(
                                   icon: Icons.person_outline,
                                   title: "Profil",
-                                  subtitle: "Lihat dan kelola profilmu di sini.",
+                                  subtitle:
+                                      "Lihat dan kelola profilmu di sini.",
                                 ),
                                 Divider(
                                   height: 1,
@@ -277,33 +281,60 @@ class DashboardPage extends StatelessWidget {
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
-                                const MenuTile(
+                                MenuTile(
                                   icon: Icons.people_outline,
                                   title: "Permintaan Saksi",
                                   subtitle:
                                       "Lihat teman yang mengajukan permintaan saksi.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PermintaanSaksiPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const Divider(
                                   height: 1,
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
-                                const MenuTile(
+                                MenuTile(
                                   icon: Icons.bar_chart_rounded,
                                   title: "Progress",
                                   subtitle:
                                       "Lihat kemajuan kompetensi dan pencapaian belajarmu.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ProgressBelajarPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const Divider(
                                   height: 1,
                                   indent: 70,
                                   color: Color(0xFFF0F0F0),
                                 ),
-                                const MenuTile(
+                                MenuTile(
                                   icon: Icons.warning_amber_rounded,
                                   title: "Catatan Sikap",
                                   subtitle:
                                       "Lihat catatan sikap dan perilaku dari guru.",
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CatatanSikapPage(),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
