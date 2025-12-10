@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:jurnalku/dashboard.dart';
+import 'package:jurnalku/explorer.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:jurnalku/explorer.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -229,7 +231,12 @@ class LoginPage extends StatelessWidget {
             bottom: 20,
             child: FloatingActionButton.extended(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const StudentDirectoryPage(),
+                  ),
+                );
               },
               backgroundColor: const Color(0xFF0D47A1),
               icon: const Icon(Icons.explore, color: Colors.white),
