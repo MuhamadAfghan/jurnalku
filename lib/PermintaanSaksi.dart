@@ -9,8 +9,6 @@ class PermintaanSaksiPage extends StatefulWidget {
 }
 
 class _PermintaanSaksiPageState extends State<PermintaanSaksiPage> {
-  int _selectedTab = 0;
-  
   String _getCurrentDate() {
     final now = DateTime.now();
     return DateFormat('EEEE, dd MMMM yyyy').format(now);
@@ -102,8 +100,9 @@ class _PermintaanSaksiPageState extends State<PermintaanSaksiPage> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.calendar_today, 
-                        size: 18, 
+                      Icon(
+                        Icons.calendar_today,
+                        size: 18,
                         color: Colors.blue.shade700,
                       ),
                       const SizedBox(width: 8),
@@ -122,85 +121,66 @@ class _PermintaanSaksiPageState extends State<PermintaanSaksiPage> {
             ),
           ),
 
-          // Tab Section
-          Container(
-            color: Colors.white,
-            child: Row(
-              children: [
-                _buildTab('PENGIRIM', 0),
-                _buildTab('TANGGAL', 1),
-                _buildTab('KONFIRMASI', 2),
-              ],
-            ),
-          ),
-
-          // Content Section
+          // Table-like Column Section
           Expanded(
-            child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.group_outlined,
-                    size: 80,
-                    color: Colors.grey.shade400,
+                  // Header row
+                  Row(
+                    children: const [
+                      Expanded(child: Text("Pengirim", style: TextStyle(fontWeight: FontWeight.bold))),
+                      Expanded(child: Text("Tanggal", style: TextStyle(fontWeight: FontWeight.bold))),
+                      Expanded(child: Text("Konfirmasi", style: TextStyle(fontWeight: FontWeight.bold))),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Belum ada permintaan',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
-                    ),
+                  const Divider(),
+
+                  // Data row (dummy)
+                  Row(
+                    children: const [
+                      Expanded(child: Text("Belum ada data")),
+                      Expanded(child: Text("-")),
+                      Expanded(child: Text("-")),
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Belum ada yang mengirim permintaan saksi kepada Anda',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey.shade600,
-                    ),
-                    textAlign: TextAlign.center,
+
+                  const Spacer(),
+
+                  // Default message
+                  Column(
+                    children: [
+                      Icon(
+                        Icons.group_outlined,
+                        size: 80,
+                        color: Colors.grey.shade400,
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Belum ada permintaan',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Belum ada yang mengirim permintaan saksi kepada Anda',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTab(String title, int index) {
-    final isSelected = _selectedTab == index;
-    return Expanded(
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            _selectedTab = index;
-          });
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: isSelected ? const Color(0xFF0D47A1) : Colors.transparent,
-                width: 3,
-              ),
-            ),
-          ),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-              color: isSelected ? const Color(0xFF0D47A1) : Colors.grey.shade600,
-            ),
-          ),
-        ),
       ),
     );
   }

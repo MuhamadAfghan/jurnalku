@@ -4,7 +4,7 @@ import 'panduan_page.dart';
 import 'catatan_sikap_page.dart';
 import 'pengaturan_akun_page.dart';
 import 'package:jurnalku/JurnalPembiasaan.dart';
-import 'package:jurnalku/PermintaanSanksi.dart';
+import 'package:jurnalku/PermintaanSaksi.dart';
 import 'loginpage.dart';
 
 void main() {
@@ -22,8 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-
-      home: const PengaturanAkunPage(),
+      home: const LoginPage(),
     );
   }
 }
