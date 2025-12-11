@@ -1,32 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jurnalku/catatan_sikap_page.dart';
-import 'package:jurnalku/progress.dart';
-import 'package:jurnalku/profile_page.dart';
+import 'profile_page.dart';
+import 'explorer.dart';
 import 'JurnalPembiasaan.dart';
 import 'PermintaanSaksi.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Jurnalku Dashboard',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Segoe UI',
-        primaryColor: const Color(0xFF104E92),
-        scaffoldBackgroundColor: const Color(0xFFF7F9FC),
-        useMaterial3: true,
-      ),
-      home: const DashboardPage(),
-    );
-  }
-}
+import 'progress.dart';
+import 'catatan_sikap_page.dart';
+import 'panduan_page.dart';
+import 'pengaturan_akun_page.dart';
+import 'LoginPage.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -68,12 +49,122 @@ class DashboardPage extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(width: 12),
-                  const CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(
-                      'https://i.pravatar.cc/150?img=12',
+                  PopupMenuButton<String>(
+                    offset: const Offset(0, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    backgroundColor: Colors.grey,
+                    icon: const CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(
+                        'https://i.pravatar.cc/150?img=12',
+                      ),
+                      backgroundColor: Colors.grey,
+                    ),
+                    onSelected: (value) {
+                      switch (value) {
+                        case 'dashboard':
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DashboardPage()),
+                          );
+                          break;
+                        case 'profil':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const StudentProfilePage()),
+                          );
+                          break;
+                        case 'jelajahi':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const StudentDirectoryPage()),
+                          );
+                          break;
+                        case 'jurnal':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const JurnalPembiasaanPage()),
+                          );
+                          break;
+                        case 'saksi':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PermintaanSaksiPage()),
+                          );
+                          break;
+                        case 'progress':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ProgressBelajarPage()),
+                          );
+                          break;
+                        case 'sikap':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CatatanSikapPage()),
+                          );
+                          break;
+                        case 'panduan':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PanduanPage()),
+                          );
+                          break;
+                        case 'settings':
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const PengaturanAkunPage()),
+                          );
+                          break;
+                        case 'logout':
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                            (route) => false,
+                          );
+                          break;
+                      }
+                    },
+                    itemBuilder: (BuildContext context) =>
+                        <PopupMenuEntry<String>>[
+                      _buildMenuItem(
+                          'dashboard', Icons.home_outlined, 'Dashboard'),
+                      _buildMenuItem('profil', Icons.person_outline, 'Profil'),
+                      _buildMenuItem(
+                          'jelajahi', Icons.explore_outlined, 'Jelajahi'),
+                      const PopupMenuDivider(),
+                      _buildMenuItem('jurnal', Icons.book_outlined,
+                          'Jurnal Pembiasaan'),
+                      _buildMenuItem(
+                          'saksi', Icons.people_outline, 'Permintaan Saksi'),
+                      _buildMenuItem(
+                          'progress', Icons.bar_chart_rounded, 'Progress'),
+                      _buildMenuItem('sikap', Icons.warning_amber_rounded,
+                          'Catatan Sikap'),
+                      const PopupMenuDivider(),
+                      _buildMenuItem('panduan', Icons.menu_book_outlined,
+                          'Panduan Penggunaan'),
+                      _buildMenuItem('settings', Icons.settings_outlined,
+                          'Pengaturan Akun'),
+                      _buildMenuItem(
+                          'logout', Icons.logout_outlined, 'Log Out'),
+                    ],
                   ),
                 ],
               ),
@@ -225,13 +316,13 @@ class DashboardPage extends StatelessWidget {
                                 MenuTile(
                                   icon: Icons.person_outline,
                                   title: "Profil",
-                                  subtitle:
-                                      "Lihat dan kelola profilmu di sini.",
+                                  subtitle: "Lihat dan kelola profilmu di sini.",
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const StudentProfilePage(),
+                                        builder: (context) =>
+                                            const StudentProfilePage(),
                                       ),
                                     );
                                   },
@@ -410,43 +501,41 @@ class DashboardPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildLegend(
-                                  "Selesai",
-                                  "4",
-                                  const Color(0xFF3F51B5),
-                                ),
+                                    "Selesai", "4", const Color(0xFF3F51B5)),
                                 _buildLegend(
-                                  "Pending",
-                                  "0",
-                                  const Color(0xFF7986CB),
-                                ),
+                                    "Pending", "0", const Color(0xFF7986CB)),
                                 _buildLegend(
-                                  "Belum",
-                                  "0",
-                                  const Color(0xFFADD8E6),
-                                ),
+                                    "Belum", "0", const Color(0xFFADD8E6)),
                                 _buildLegend(
-                                  "Hari Ini",
-                                  "0",
-                                  const Color(0xFF00BCD4),
-                                ),
+                                    "Hari Ini", "0", const Color(0xFF00BCD4)),
                                 const SizedBox(height: 24),
-                                const Row(
-                                  children: [
-                                    Text(
-                                      "Lihat Progress Kamu",
-                                      style: TextStyle(
-                                        color: Color(0xFF1565C0),
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14,
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProgressBelajarPage()),
+                                    );
+                                  },
+                                  child: const Row(
+                                    children: [
+                                      Text(
+                                        "Lihat Progress Kamu",
+                                        style: TextStyle(
+                                          color: Color(0xFF1565C0),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(width: 4),
-                                    Icon(
-                                      Icons.arrow_right_alt,
-                                      color: Color(0xFF1565C0),
-                                      size: 18,
-                                    ),
-                                  ],
+                                      SizedBox(width: 4),
+                                      Icon(
+                                        Icons.arrow_right_alt,
+                                        color: Color(0xFF1565C0),
+                                        size: 18,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 24),
                                 Divider(height: 1, color: Colors.grey[200]),
@@ -505,6 +594,28 @@ class DashboardPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  PopupMenuItem<String> _buildMenuItem(
+      String value, IconData icon, String text) {
+    return PopupMenuItem<String>(
+      value: value,
+      height: 40,
+      child: Row(
+        children: [
+          Icon(icon, color: const Color(0xFF5A6B89), size: 20),
+          const SizedBox(width: 12),
+          Text(
+            text,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF2C3E50),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
   }
